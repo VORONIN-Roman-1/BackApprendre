@@ -1,0 +1,1 @@
+mvn archetype:generate -Dgroupld=com.apress.todo -Dartifactld=todo -Dversion=0.0.1-SNAPSHOT -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp

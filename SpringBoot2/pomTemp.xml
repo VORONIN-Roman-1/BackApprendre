@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.0rg/POM/4.0.0" xmlns:xsi=
+"http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupld>com.apress.todo</groupld>
+<artifactld>todo</artifactld>
+<packaging>war</packaging>
+<version>0.0.1-SNAPSHOT</version>
+<name>todo Webapp</name>
+<properties>
+<!-- Универсальные свойства -->
+<java.version>1.8</java.version>
+<!-- Веб -->
+<jsp.version>2.2</jsp.version>
+<jstl.version>l.2</jstl.version>
+<servlet.version>3.1.0</servlet.version>
+bootstrap.version>3.3.7</bootstrap.version>
+<jackson.version>2.9.2</jackson.version>
+<webjars.version>0.32</webjars.version>
+<!-- Spring -->
+<spring-framework.version>5.0.3.RELEASE</spring-framework.version>
+<!-- DPA -->
+<spring-data-jpa>l.11.4.RELEASE</spring-data-jpa>
+<hibernate-jpa.version>l.0.0.Final</hibernate-jpa.version>
+<hibernate.version>4.3.11.Final</hibernate.version>
+<!-- Драйверы -->
+<h2.version>1.4.197</h2.version>
+<!-- Журналы -->
+<slf4j.version>1.7.25</slf4j.version>
+<logback.version>l.2.3</logback.version>
+</properties>
+<dependencies>
+<!-- Spring MVC -->
+<dependency>
+<groupld>org.springframework</groupld>
+<artifactld>spring-webmvc</artifactld>
+<version>${spring-framework.version}</version>
+</dependency>
+<!-- Spring Data DPA -->
+<dependency>
+<groupld>org.springframework.data</groupld>
+<artifactld>spring-data-jpa</artifactld>
+<version>${spring-data-jpa}</version>
+</dependency>
+<dependency>
+<groupld>org.hibernate.javax.persistence</groupld>
+<artifactld>hibernate-jpa-2.l-api</artifactld>
+<version>${hibernate-jpa.version)</version>
+</dependency>
+<dependency>
+<groupld>org.hibernate</groupld>
+<artifactld>hibernate-core</artifactld>
+<version>${hibernate.version}</version>
+</dependency>
+<dependency>
+<groupld>org.hibernate</groupld>
+<artifactld>hibernate-entitymanager</artifactld>
+<version>${hibernate.version}</version>
+</dependency>
+<!-- Журналы -->
+<dependency>
+<groupld>org.slf4j</groupld>
+<artifactld>jcl-over-slf4j</artifactld>
+<version>${slf4j.version}</version>
+</dependency>
+<dependency>
+<groupld>ch.qos.logback</groupld>
+<artifactld>logback-classic</artifactld>
+<version>${logback.version}</version>
+</dependency>
+<!-- Драйверы -->
+<dependency>
+<groupld>com.h2database</groupld>
+<artifactld>h2</artifactld>
+<version>${h2.version}</version>
+<scope>runtime</scope>
+</dependency>
+<!-- Веб-зависимости Java EE-->
+<dependency>
+<groupld>javax.servlet</group!d>
+<artifactld>jstl</artifactld>
+<version>${jstl.version}</version>
+</dependency>
+<dependency>
+<groupld>javax.servlet</groupld>
+<artifactld>javax.servlet-api</artifactld>
+<version>${servlet.version}</version>
+<scope>provided</scope>
+</dependency>
+<dependency>
+<groupld>javax.servlet.jsp</groupld>
+<artifactld>jsp-api</artifactld>
+<version>${jsp.version}</version>
+<scope>provided</scope>
+</dependency>
+<!-- Веб UI -->
+<dependency>
+<groupld>org.webjars</groupld>
+<artifactld>webjars-locator</artifactld>
+<version>${webjars.version}</version>
+</dependency>
+<dependency>
+<groiipld>org.webjars</groupld>
+<artifactld>bootstrap</artifactld>
+<version>${bootstrap.version}</version>
+</dependency>
+<!-- Веб - JSON/XML ответ -->
+<dependency>
+<groupld>com.fasterxml.jackson.core</groupld>
+<artifactld>jackson-databind</artifactld>
+<version>${jackson.version}</version>
+</dependency>
+<dependency>
+<groupld>com.fasterxml.jackson.datatype</groupld>
+<artifactld>jackson-datatype-joda</artifactld>
+<version>${jackson.version}</version>
+</dependency>
+<dependency>
+<groupld>com.fasterxml.jackson.dataformat</groupld>
+<artifactld>jackson-dataformat-xml</artifactld>
+<version>${jackson.version}</version>
+</dependency>
+</dependencies>
+<build>
+<finalName>todo</finalName>
+<plugins>
+<plugin>
+<groupld>org.apache.maven.plugins</groupld>
+<artifactld>maven-compiler-plugin</artifactld>
+<configuration>
+<source>1.8</source>
+<target>1.8</target>
+</configuration>
+</plugin>
+</plugins>
+</build>
+</project>
