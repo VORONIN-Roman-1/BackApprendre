@@ -10,10 +10,26 @@
     <bean id="musicBean"
           class="fr.voronin.spring.RockMusic">
     </bean>
+    <bean id="musicBean1"
+          class="fr.voronin.spring.RockMusic">
+    </bean>
+    <bean id="musicBean2"
+          class="fr.voronin.spring.ClassicalMusic">
+    </bean>
+    <bean id="musicBean3"
+          class="fr.voronin.spring.BluzMusic">
+    </bean>
     <bean id="musicPlayer"
           class="fr.voronin.spring.MusicPlayer">
+        <constructor-arg >
+            <list>
+                <ref bean="musicBean1"/>
+                <ref bean="musicBean2"/>
+                <ref bean="musicBean3"/>
+            </list>
+        </constructor-arg>
 <!--          <constructor-arg ref="musicBean"/>-->
-        <property name="music" ref="musicBean"/>
+<!--        <property name="music" ref="musicBean"/>-->
         <property name="name" value="${musicPlayer.name}"/>
         <property name="volume" value="${musicPlayer.volume}"/>
 

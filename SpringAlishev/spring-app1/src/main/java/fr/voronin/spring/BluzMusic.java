@@ -1,6 +1,6 @@
 package fr.voronin.spring;
 
-public class Bluz implements Music{
+public class BluzMusic implements Music{
     @Override
     public String getSong() {
         return "Saxophone";
