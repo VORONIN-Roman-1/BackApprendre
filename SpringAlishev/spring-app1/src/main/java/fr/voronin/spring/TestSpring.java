@@ -1,14 +1,17 @@
 package fr.voronin.spring;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.text.Annotation;
 
 public class TestSpring {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-                "applicationContext.xml"
-        );
-        ClassicalMusic classicalMusic = context.getBean("musicBean",ClassicalMusic.class);
-        System.out.println(classicalMusic.getSong());
+        AnnotationConfigApplicationContext context= new AnnotationConfigApplicationContext(SpringConfig.class);
+        MusicPlayer musicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
+        System.out.println(musicPlayer);
+        musicPlayer.playMusicList();
+
 //        MusicPlayer musicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
 //        MusicPlayer musicPlayer1 = context.getBean("musicPlayer",MusicPlayer.class);
 //        System.out.println(musicPlayer);

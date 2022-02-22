@@ -1,16 +1,24 @@
 package fr.voronin.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class MusicPlayer {
+    @Autowired
     private List<Music> musicList= new ArrayList<>();
+    @Value("${musicPlayer.name}")
     private String name;
+    @Value("${musicPlayer.volume}")
     private  int volume;
 
-    public MusicPlayer(List<Music> musicList) {
-        this.musicList = musicList;
-    }
+//    @Autowired
+//    public MusicPlayer(List<Music> musicList) {
+//        this.musicList = musicList;
+//    }
 
     public String getName() {
         return name;
@@ -36,5 +44,13 @@ public class MusicPlayer {
             System.out.println("Playing "+ music.getSong());
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "MusicPlayer{" +
+                ", name='" + name + '\'' +
+                ", volume=" + volume +
+                '}';
     }
 }
