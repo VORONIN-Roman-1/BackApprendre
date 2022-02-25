@@ -1,0 +1,8 @@
+div {
+    width:300px;
+    height: 200px;
+    border: dotted 1px black;
+    font-family: verdana;
+    font-size: 20px;
+    background-color: powderblue;
+}
