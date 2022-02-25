@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:property-placeholder location="classpath:musicien.properties"/>
+    <!-- Definir les beans ici -->
+    <!-- Définir les Dépendances -->
+    <bean id="unPrepareService"
+          class="service.ZenPreparationService" >
+    </bean>
+    <bean id="unMusicien" class="entity.Violoniste" scope="prototype" >
+        <!-- Définir l' Injection par constructeur -->
+        <constructor-arg ref="unPrepareService"/>
+    </bean>
+    <bean id="unBatteur" class="entity.Batteur"
+          init-method="myInitMethod"
+          destroy-method="myDestroyMethod">
+
+        <!-- Définir l'injection par setter -->
+        <property name ="prepareService" ref ="unPrepareService" />
+        <property name="emailAddresse" value="${toto.email}" />
+        <property name="site" value="${toto.site}" />
+    </bean>
+</beans>
