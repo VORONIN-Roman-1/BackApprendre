@@ -18,6 +18,12 @@
     Code Postal : <form:input path="codePostal"/>
     <form:errors path="codePostal" cssClass="error" />
     <br><br>
+    email : <form:input path="email"/>
+    <form:errors path="email" cssClass="error" />
+    <br><br>
+    serial number : <form:input path="serialNumber"/>
+    <form:errors path="serialNumber" cssClass="error" />
+    <br><br>
     <input type="submit" value="Valider" />
 </form:form>
 </body>

@@ -2,14 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>personnage valide - vue</title>
 </head>
 <body>
-Le personnage soumis est valide : ${personnage.nom} ${personnage.prenom}
+Le personnage soumis est valide : ${personnage.nom}${personnage.prenom}
 <br><br>
-Points de vie : ${personnage.pointsDeVie}
+Points de vie valide : ${personnage.pointsDeVie}
 <br><br>
-Code Postal valide: ${personnage.codePostal}
+email valide : ${personnage.email}
+<br><br>
+serialNumber valide : ${personnage.serialNumber}
 </body>
 </html>
