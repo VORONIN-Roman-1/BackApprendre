@@ -1,0 +1,1 @@
+truncate bdd_hibernate_demo.voiture
