@@ -22,7 +22,6 @@ public class MessageDaoHibernateImpl implements MessageDao {
     }
 
     @Override
-    @Transactional
     public List<Message> findAll() {
         // récupérer la session hibernate courante
         Session currentSession = entityManager.unwrap(Session.class);
@@ -32,5 +31,26 @@ public class MessageDaoHibernateImpl implements MessageDao {
         List<Message> messages = query.getResultList();
         // retourner le résultat
         return messages;
+    }
+
+    @Override
+    public Message findById(int MessageId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Message message=  currentSession.get(Message.class, MessageId);
+        return message;
+    }
+
+    @Override
+    public void save(Message message) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.saveOrUpdate(message);
+    }
+
+    @Override
+    public void deleteById(int messageId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query query= currentSession.createQuery("delete from Message where id=:unId");
+        query.setParameter("unId", messageId);
+        query.executeUpdate();
     }
 }
