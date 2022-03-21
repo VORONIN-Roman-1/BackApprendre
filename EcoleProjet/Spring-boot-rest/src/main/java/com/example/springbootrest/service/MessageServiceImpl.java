@@ -10,27 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
+@Transactional
 public class MessageServiceImpl implements MessageService{
 //    @Autowired
 //    @Qualifier("messageDaoImplV2")
 //    MessageDao messageDao;
     @Autowired
     MessageRepository messageDao;
-    @Transactional
     public List<Message> findAll(){
         return messageDao.findAll();
     }
-    @Transactional
     @Override
     public Message findById(int MessageId) {
         return messageDao.findById(MessageId);
     }
-    @Transactional
     @Override
     public void save(Message message) {
         messageDao.save(message);
     }
-    @Transactional
     @Override
     public void deleteById(int messageId) {
         messageDao.deleteById(messageId);

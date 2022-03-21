@@ -1,0 +1,842 @@
+openapi: 3.0.0
+info:
+  title: API demo Open API 3
+  version: v0.0.1-SNAPSHOT
+  description: API pour démo
+  
+servers:
+  - url: http://localhost:8080
+    description: devlopment 
+
+tags:
+  - name: Message
+    description : everything about Message 
+     
+  - name: Product
+    description : everything about products 
+    
+paths:
+  /messages:
+    get:
+      tags:
+        - Message
+      summary: Return a list of All message...
+      description: 
+        A detailed description of the operation.
+        Use markdown for rich text representation,
+        such as **bold**, *italic*, and [links](https://....).
+      operationId: "getAllEntities"
+      responses:
+        '200':
+          description: A Json array of ....
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                  $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError' 
+         # Definition of all error statuses
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+      externalDocs: # Find more details
+          description: Learn more about get Entity operations provided by this API.
+          url: http://... 
+    post:
+      tags:
+        - Entity
+      summary: Creates an Entity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityPost'
+      responses: 
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError' 
+         # Definition of all error statuses
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /entities/{id}:
+    get:
+      tags:
+        - Entity
+      summary: "Return an entity  by ID."
+      description: "Entity update"
+      operationId: "getEntityById"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id to identify one stored entity if exists.
+          schema:
+            type: integer
+           # format: int64
+            minimum: 1
+      responses:
+       '200':
+          description: OK. the matching entity.
+          content:
+           application/json:
+             schema:
+              $ref: '#/components/schemas/Entity'
+       '400':
+          $ref: '#/components/responses/BadRequest' 
+       '401':
+          $ref: '#/components/responses/Unauthorized'  
+       '404':
+          $ref: '#/components/responses/NotFound'       
+       '5XX':
+          $ref: '#/components/responses/ServerError'        
+       default:
+          $ref: '#/components/responses/UnexpectedError'        
+    put:
+      tags:
+       - Entity
+      summary: "Mettre à jour une entity désignée par son id"
+      description: "Entity update"
+      operationId: "updateEntityById"
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required : true
+          description : "The id of the entity to update"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entity'
+      responses:
+        '200':
+          description: "OK Updated"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError' 
+         # Definition of all error statuses
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    delete:
+      tags:
+       - Entity
+      summary: "Supprimer une entity désignée par son id"
+      description: "Entity **delete**"
+      operationId: "deleteEntityById"
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required : true
+          description : "The id of the entity to delete"
+      responses:
+        '204':
+          description: The resource was deleted successfully.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError' 
+         # Definition of all error statuses
+        default:
+          $ref: '#/components/responses/UnexpectedError' 
+   
+  /products/findByCategorie:
+    get:                        # like /products?category={category}
+      tags:
+        - Product
+      summary: "return all category products  (choose caterory  among enum)."
+      description: "get the Product with  this *categorie* "
+      operationId: "getEntitiesByCategory"
+      parameters:
+        - in: query           # like /products?category={category}
+          name: categorie
+          description: todo.
+          schema:
+            type: string
+            enum: [ jardinage, alimentaire, sport, informatique,...]
+          required: true
+      responses:
+        '200':
+          description: A Json array of ....
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest' 
+        '401':
+          $ref: '#/components/responses/Unauthorized'  
+        '404':
+          $ref: '#/components/responses/NotFound'       
+        '5XX':
+          $ref: '#/components/responses/ServerError'        
+        default:
+          $ref: '#/components/responses/UnexpectedError'        
+  /products/findByMarque:  
+    get:                        # like /products?marque={marque}
+      tags:
+        - Product
+      summary: "return all  marque products  (give a Plain text marque)."
+      description: "get the Product with  this *categorie* "
+      operationId: "getProductByMarque"
+      parameters:
+        - in: query           # like /products?marque={marque}
+          name: marque
+          description: todo.
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: A Json array of ....
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest' 
+        '401':
+          $ref: '#/components/responses/Unauthorized'  
+        '404':
+          $ref: '#/components/responses/NotFound'       
+        '5XX':
+          $ref: '#/components/responses/ServerError'        
+        default:
+          $ref: '#/components/responses/UnexpectedError'          
+  /products/findBykeyWord:  
+    get:                        # like /products?keyWord={keyWord}
+      tags:
+        - Product
+      summary: "return all   products that contain a given kay-word (give a Plain text key-word)."
+      description: "get the Product with  this *categorie* "
+      operationId: "getProductByKeyWord"
+      parameters:
+        - in: query           # like /products?keyWord={keyWord}
+          name: keyWord
+          description: todo.
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: A Json array of ....
+          content:
+            application/json:
+              schema:
+               type: array
+               items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest' 
+        '401':
+          $ref: '#/components/responses/Unauthorized'  
+        '404':
+          $ref: '#/components/responses/NotFound'       
+        '5XX':
+          $ref: '#/components/responses/ServerError'        
+        default:
+          $ref: '#/components/responses/UnexpectedError'          
+  /products/findAll:
+    get:
+      tags:
+        - Product
+      deprecated: true
+      responses:
+        default:
+          description: deprecated method end-point
+
+  /users/findByUserName: #like /users?username={username}               
+    get:                                                 
+      tags:                                              
+        - User                                           
+      summary: retrieve users with a given username     
+      description: to do                                 
+      operationId: getUsersByUserName                          
+      parameters:                                        
+        - in: query    #like /users?username={username}  
+          name: username                                 
+          description: to do                             
+          schema:                                        
+            type: string                                 
+      responses:                                         
+        '200':                                           
+          description: A Json array of ....              
+          content:                                       
+            application/json:                            
+              schema:                                    
+               type: array                               
+               items:                                    
+                  $ref: '#/components/schemas/User'   
+        '400':                                           
+          $ref: '#/components/responses/BadRequest'      
+        '401':                                           
+          $ref: '#/components/responses/Unauthorized'      
+        '404':                                           
+          $ref: '#/components/responses/NotFound'             
+        '5XX':                                           
+          $ref: '#/components/responses/ServerError'           
+        default:                                          
+          $ref: '#/components/responses/UnexpectedError' 
+  
+  /users/findByfirstName: #like /users?firstName={firstName}               
+    get:                                                 
+      tags:                                              
+        - User                                           
+      summary: retrieve users withe a given firstName   
+      description: to do                                 
+      operationId: getUsersByFirstName                           
+      parameters:                                        
+        - in: query    #like /users?firstName={firstName}  
+          name: firstname                                 
+          description: to do                             
+          schema:                                        
+            type: string                                 
+      responses:                                         
+        '200':                                           
+          description: A Json array of ....              
+          content:                                       
+            application/json:                            
+              schema:                                    
+               type: array                               
+               items:                                    
+                  $ref: '#/components/schemas/User'   
+        '400':                                           
+          $ref: '#/components/responses/BadRequest'      
+        '401':                                           
+          $ref: '#/components/responses/Unauthorized'      
+        '404':                                           
+          $ref: '#/components/responses/NotFound'             
+        '5XX':                                           
+          $ref: '#/components/responses/ServerError'           
+        default:                                          
+          $ref: '#/components/responses/UnexpectedError' 
+
+  /users/findByfirstNameAndLastName: #like /users?firstName={firstName}&?lastName={lastName}               
+    get:                                                 
+      tags:                                              
+        - User                                           
+      summary: retrieve users withe a given pair  firstName  & lastname 
+      description: to do                                 
+      operationId: getUsersByFirstNameAndLastName                          
+      parameters:                                        
+        - in: query    #like /users?firstName={firstName}  
+          name: firstname                                 
+          description: to do                             
+          schema:                                        
+            type: string    
+        - in: query    #like /users?lastName={lastName}  
+          name: lastname                                 
+          description: to do                             
+          schema:                                        
+            type: string    
+      responses:
+        '200':                                           
+          description: A Json array of ....              
+          content:                                       
+            application/json:                            
+              schema:                                    
+               type: array                               
+               items:                                    
+                  $ref: '#/components/schemas/User'   
+        '400':                                           
+          $ref: '#/components/responses/BadRequest'      
+        '401':                                           
+          $ref: '#/components/responses/Unauthorized'      
+        '404':                                           
+          $ref: '#/components/responses/NotFound'             
+        '5XX':                                           
+          $ref: '#/components/responses/ServerError'           
+        default:                                          
+          $ref: '#/components/responses/UnexpectedError' 
+
+ # /users/{id}:
+ 
+ 
+components:
+  schemas: 
+    Entity:
+      type: object
+      properties:
+        id:
+          description: identifiant
+          type: integer
+          minimum: 1
+          nullable: true
+        name: 
+          description: name
+          type: string
+          minLength: 3
+          maxLength: 20
+          nullable: false
+        taille:
+          description: taille - sizel
+          type: number
+          minimum: 100
+          maximum: 50000.62
+        rank:
+          description: neant
+          type: number
+          format: float
+          nullable: true
+        score: 
+          description: value to describe
+          type: number
+          format: double
+          minimum: 1
+          maximum: 20
+        difficulty:
+          description: difficulty level
+          type: integer
+          minimum: 0.1
+          exclusiveMinimum: true # value > minimum
+          maximum: 5
+          exclusiveMaximum: true #value < maximum
+        age:
+          description: non calculé 
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: false # value ≥ minimum
+          maximum: 5
+          exclusiveMaximum: false #value ≤ maximum
+        temperature:
+          description: temp en degré Celsius 
+          type: integer
+          format: int64
+          multipleOf: 10 # must be a positive number ; you cannot use multipleOf: -5
+        
+
+        gratuit:
+          description: est-ce une entity gratuite
+          type: boolean
+          example: true
+         
+        creaDate:
+          description: date de création
+          type: string
+          format: date #for example, 2017-07-21
+          example: 2017-07-21
+        
+        lastUpdate:
+          description: dernière mise à jour
+          type: string
+          format: date-time #for example, 2017-07-21T17:32:28Z
+          example: 2017-07-21T17:32:28Z
+         
+        motDePasse:
+          description: pwd
+          type: string
+          format: password
+          example: "***"
+          
+        encryptedData:
+          description: base64 encoded Character
+          type: string
+          format: byte
+          
+        doc:  
+          description: transmited file as  binary file contents <=>type  string format binary
+          type: string
+          format: binary   # binary file contents
+       
+        doc2:     # base64-encoded file contents 
+          description: transmited file as base64-encoded file contents  <=>type  string format byte
+          type: string
+          format: byte    # base64-encoded file contents 
+       
+       
+        propertyStringArray:
+          description: une propriété de Entity de type tableau de chaines
+          type: array
+          items:
+            type: string
+          example:  [ "string", "string" ,...]
+        
+        propertyIntArray:
+          description: une propriété de Entity de type tableau de chaines
+          type: array
+          items:
+            type: integer
+          example:  [1, 2, 3 ,...] 
+          uniqueItems: true  # [1, 2, 3] – valid
+                            # [1, 1, 3] – not valid
+                            # [ ] – valid
+        
+        
+        propertyArray2D: # [ [1, 2], [3, 4] ]
+          description: une propriété de Entity de type tableau à 2 dimensions
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+          example:  [ [1, 2], [3, 4] ]
+          minItems: 1   #array length
+          maxItems: 10  #array length
+         
+        
+        propertyArrayOfObjects: # [ {"id": 5}, {"id": 8} ]
+          description: une propriété de Entity de type  tableau d'objets
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+          example:  [ {"id": 5}, {"id": 8} ]
+     
+        centerView:
+          type: object
+          description: centroïde
+        track:
+          type: object
+          description: tracé
+    Product:
+      type: object
+      properties: #By default, all object properties are optional
+        id:
+          type: integer
+        name:
+          type: string
+        categorie:
+          type: string
+        marque:
+          type: string
+        prix:
+          type: integer
+          format: float
+      required: # required is an object-level attribute
+        - id
+        - prix
+    User: 
+      type: object
+      properties: #By default, all object properties are optional
+        id:
+          # Returned by GET, not used in POST/PUT/PATCH
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        password:
+          # Used in POST/PUT/PATCH, not returned by GET
+          type: string
+          writeOnly: true
+        contact_info: # Nested object
+          # The value of this property is an object
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+    Client: 
+      type: object
+      properties: #By default, all object properties are optional
+        id:
+          # Returned by GET, not used in POST/PUT/PATCH
+          type: integer
+          readOnly: true
+        username:
+          type: string
+        password:
+          # Used in POST/PUT/PATCH, not returned by GET
+          type: string
+          writeOnly: true
+        contact_info: # Nested object
+          $ref: '#/components/schemas/ContactInfo'
+    ContactInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+    AnyValue1: {}
+    AnyValue2:
+      description: Can be any value - string, number, boolean, array or object.
+    AnyValue3:
+      anyOf:
+        - type: string
+        - type: number
+        - type: integer
+        - type: boolean
+        - type: array
+          items: {}
+        - type: object
+    AnyValue4:
+      nullable: true   #If the null value needs to be allowed
+      description: Can be any value, including `null`.
+    EntityPost:
+      type: object
+      properties:
+        name: 
+          description: name
+          type: string
+          minLength: 3
+          maxLength: 20
+          nullable: false
+        taille:
+          description: taille - sizel
+          type: number
+          minimum: 100
+          maximum: 50000.62
+        rank:
+          description: neant
+          type: number
+          format: float
+          nullable: true
+        score: 
+          description: value to describe
+          type: number
+          format: double
+          minimum: 1
+          maximum: 20
+        difficulty:
+          description: difficulty level
+          type: integer
+          minimum: 0.1
+          exclusiveMinimum: true # value > minimum
+          maximum: 5
+          exclusiveMaximum: true #value < maximum
+        age:
+          description: non calculé 
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: false # value ≥ minimum
+          maximum: 5
+          exclusiveMaximum: false #value ≤ maximum
+        temperature:
+          description: temp en degré Celsius 
+          type: integer
+          format: int64
+          multipleOf: 10 # must be a positive number ; you cannot use multipleOf: -5
+        
+
+        gratuit:
+          description: est-ce une entity gratuite
+          type: boolean
+          example: true
+         
+        creaDate:
+          description: date de création
+          type: string
+          format: date #for example, 2017-07-21
+          example: 2017-07-21
+        
+        lastUpdate:
+          description: dernière mise à jour
+          type: string
+          format: date-time #for example, 2017-07-21T17:32:28Z
+          example: 2017-07-21T17:32:28Z
+         
+        motDePasse:
+          description: pwd
+          type: string
+          format: password
+          example: "***"
+          
+        encryptedData:
+          description: base64 encoded Character
+          type: string
+          format: byte
+          
+        doc:
+          description: transmited file
+          type: string
+          format: binary
+       
+       
+       
+        propertyArray:
+          description: une propriété de Entity de type tableau de chaines
+          type: array
+          items:
+            type: string
+          example:  [ "string", "string" ,...]
+        
+        propertyArray2D: # [ [1, 2], [3, 4] ]
+          description: une propriété de Entity de type tableau à 2 dimensions
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+          example:  [ [1, 2], [3, 4] ]
+        
+        propertyArrayOfObjects: # [ {"id": 5}, {"id": 8} ]
+          description: une propriété de Entity de type  tableau d'objets
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+          example:  [ {"id": 5}, {"id": 8} ]
+     
+     
+     
+        centerView:
+          type: object
+          description: centroïde
+        track:
+          type: object
+          description: tracé
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+          
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized access
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Unexpected server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnexpectedError:
+      description: Unexpected server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    
+### conflict end point with in query param requests #######
+#  /users: #like /users?username={username}               #
+#    get:                                                 #
+#      tags:                                              #
+#        - User                                           #
+#      summary: retrieve users withe a given username     #
+#      description: to do                                 #
+#      operationId: getAllUsers                           #
+#      parameters:                                        #
+#        - in: query    #like /users?username={username}  #
+#          name: username                                 #
+#          description: to do                             #
+#          schema:                                        #
+#            type: string                                 #
+#      responses:                                         #
+#        '200':                                           #
+#          description: A Json array of ....              #
+#          content:                                       #
+#            application/json:                            #
+#              schema:                                    #
+#               type: array                               #
+#               items:                                    #
+#                  $ref: '#/components/schemas/Product'   #
+#        '400':                                           #
+#          $ref: '#/components/responses/BadRequest'      #
+#        '401':                                           #
+#          $ref: '#/components/responses/Unauthorized'    #  
+#        '404':                                           #
+#          $ref: '#/components/responses/NotFound'        #     
+#        '5XX':                                           #
+#          $ref: '#/components/responses/ServerError'     #      
+#        default:                                         #
+#          $ref: '#/components/responses/UnexpectedError' #
+#                                                         #
+#  /users: #like /users?firstName={firstName}             #
+#    get:                                                 #
+#      tags:                                              #
+#        - User                                           #
+#      summary: retrieve all users                        #
+#      description: to do                                 #
+#      operationId: getAllUsers                           #
+#      parameters:                                        #
+#        - in: query    #like /users?username={username}  #
+#          name: username                                 #
+#          description: to do                             #
+#          schema:                                        #
+#            type: string                                 #
+#      responses:                                         #
+#        '200':                                           #
+#          description: A Json array of ....              #
+#          content:                                       #
+#            application/json:                            #
+#              schema:                                    #
+#               type: array                               #
+#               items:                                    #
+#                  $ref: '#/components/schemas/Product'   #
+#        '400':                                           #
+#          $ref: '#/components/responses/BadRequest'      #
+#        '401':                                           #
+#          $ref: '#/components/responses/Unauthorized'    #
+#        '404':                                           #
+#          $ref: '#/components/responses/NotFound'        #  
+#        '5XX':                                           #
+#          $ref: '#/components/responses/ServerError'     #       
+#        default:                                         #
+#          $ref: '#/components/responses/UnexpectedError' #
+#                                                         #
+###########################################################
+        
