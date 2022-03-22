@@ -2,10 +2,7 @@ package com.example.demo.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
 @Setter
@@ -21,5 +18,11 @@ public class Message {
     private String text;
 
     private String tag;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
 
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "<none>";
+    }
 }
