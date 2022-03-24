@@ -8,6 +8,12 @@
             <label for="inputPassword" class="form-label"> Password:</label>
             <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"/>
         </div>
+        <#if isRegisterForm>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label"> Email:</label>
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email"/>
+            </div>
+        </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
         <button type="submit" class="btn btn-primary"><#if isRegisterForm>Create<#else >Sing In</#if></button>
