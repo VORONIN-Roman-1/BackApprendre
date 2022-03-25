@@ -4,9 +4,11 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,17 +18,22 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private MailSenderService mailSenderService;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(@Autowired UserRepository userRepository, @Autowired MailSenderService mailSenderService) {
+    public UserService(@Autowired UserRepository userRepository, @Autowired MailSenderService mailSenderService, @Autowired PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mailSenderService = mailSenderService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new LockedException("User not found");
+        }
+        return user;
     }
 
     public boolean addUser(User user) {
@@ -38,6 +45,7 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         sendMessage(user);
@@ -93,7 +101,7 @@ public class UserService implements UserDetailsService {
             }
         }
         if (password != null && !password.isBlank()) {
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
         }
         userRepository.save(user);
         if (isEmailChanged) {
